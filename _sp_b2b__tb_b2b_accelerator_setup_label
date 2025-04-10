@@ -1,0 +1,144 @@
+/****** Object:  StoredProcedure [dbo].[_sp_b2b__tb_b2b_accelerator_setup_label]    Script Date: 4/10/2025 10:38:58 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+ALTER  procedure [dbo].[_sp_b2b__tb_b2b_accelerator_setup_label] 
+	@primarykey int,
+	@action nvarchar(10)
+as
+begin
+	set nocount on;
+
+	DECLARE   
+		@ResultMessage NVARCHAR(255) = N'Success'  
+		,@ResultStatus NVARCHAR(255) = 1  
+
+	declare 
+		@error_message						nvarchar(255)
+		,@id_accelerator_label				int
+		,@segment_code						nvarchar(100)
+		,@target_code 						nvarchar(100)
+		,@segment_code_deleted				nvarchar(100)
+		,@target_code_deleted 				nvarchar(100)
+		,@row_to_exclude					int = -1
+		,@id_b2b_plan						int;	
+
+	if(@action = 'Delete_Pre' )
+	begin
+		set @row_to_exclude = @primarykey
+
+	end
+
+	else
+
+	begin
+
+		----/* Validations ------------------------------------------------ */
+		select	@error_message = error_msg
+		from	_tb_b2b_accelerator_setup_label new
+		left join _tb_b2b_accelerator_setup_label (nolock) old
+			on old.id_accelerator_label		= new.id_accelerator_label
+			and isnull(old.segment_code,'')	= isnull(new.segment_code,'')
+			and old.target_code				= new.target_code
+			and old.id						<> @primarykey
+		outer apply 
+			(select error_msg = 
+				case
+					when new.achievement = 100
+						then 'Achievement can not be 100%. 100% of Achievement by definition gives 100% of Accelerated Achievement'
+					when new.achievement = old.achievement
+						then  CONCAT('There is already Achivement = ',ISNULL(CAST(old.achievement AS NVARCHAR),'null'),' for given Plan, Segment, Target combination')
+					when new.achievement is null and old.achievement is null and old.id is not null
+						then  'There is already Achivement = null for given Plan, Segment, Target combination'
+					when new.achievement < 0 
+						then 'Achivement can not be a negative value'
+					when new.slope < 0 
+						then 'Slope can not be a negative value'
+					when new.slope > 10 
+						then 'Slope can not be greater than 10'
+					else null
+				end) t1
+		where	new.id = @primarykey
+			and error_msg is not null;
+	end
+
+
+	----/* refresh Range grid ------------------------------------------------ */
+
+
+
+
+	if(@error_message is null)
+	begin
+		select 
+			@id_accelerator_label	= id_accelerator_label
+			,@segment_code	= segment_code
+			,@target_code 	= target_code
+		from _tb_b2b_accelerator_setup_label
+		where id = @primarykey
+		
+		exec [dbo].[_sp_b2b_refresh_accelerator_ranges_label] 
+			 @id_accelerator_label		=	@id_accelerator_label
+			,@segment_code				=	@segment_code	
+			,@target_code 				=	@target_code 	
+			,@row_to_exclude			=	@row_to_exclude
+
+		-- case where tagets/segments have been changed and previous combination no logner exists. It has to be deleted from ranges table
+		select top 1 
+			@segment_code_deleted	= r.segment_code,
+			@target_code_deleted	= r.target_code
+		from _tb_b2b_accelerator_ranges_label r
+		left join _tb_b2b_accelerator_setup_label s
+			on 1=1
+			and r.id_accelerator_label = s.id_accelerator_label 
+			and isnull(r.segment_code, '') = isnull(s.segment_code, '') 
+			and isnull(r.target_code, '') = isnull(s.target_code, '') 
+		where r.id_accelerator_label = 8
+			and s.id is null
+
+
+
+		if  @segment_code_deleted is not null or  @target_code_deleted is not null
+			
+		begin 
+
+			exec [dbo].[_sp_b2b_refresh_accelerator_ranges_label] 
+			 @id_accelerator_label		=	@id_accelerator_label
+			,@segment_code				=	@segment_code_deleted	
+			,@target_code 				=	@target_code_deleted 	
+			,@row_to_exclude			=	@row_to_exclude
+
+		end
+	
+
+		declare c cursor read_only local static for
+			select		id
+			from		_tb_b2b_plan (nolock)
+			where		id_accelerator_label = @id_accelerator_label
+		open c;
+		fetch first from c into @id_b2b_plan;
+		while (@@fetch_status = 0)
+		begin 
+
+			exec _sp_b2b_allign_accelerator @id_b2b_plan, @id_accelerator_label
+
+			fetch next from c into @id_b2b_plan;
+		end;
+		close c;
+		deallocate c;
+	end
+
+	else
+	BEGIN
+		set @ResultMessage = @error_message  
+		set @ResultStatus = 0
+	end
+
+
+ SELECT  
+        @ResultStatus AS ResultStatus  
+        ,@ResultMessage AS ResultMessage  
+
+
+end;
