@@ -1,0 +1,128 @@
+select			
+	mac.sales_person_id
+,	id_source_table				= mac.id
+,	datasource_type				= 'SF_MA'
+,	mac.closed_date		
+,	a_number
+,	company_name
+,	result						= NOV_GP
+from		_vw_b2b_manual_adjustments_cov (nolock) mac		
+outer apply (
+	select	person_id
+	from	_tb_b2b_sap_contract (nolock) sc
+	where	sc.sales_person_id = mac.sales_person_id_prefix
+	and		sc.[start_date] <= mac.closed_date
+	and		sc.[end_date] >= mac.closed_date
+) contract_data		
+where contract_data.person_id is null
+and	mac.sales_person_id is not null
+
+union all
+
+select			
+		so.sales_person_id
+	,	id_source_table				= so.id
+	,	datasource_type				= 'SF_TABLE'
+	,	so.closed_date
+	,	company_data.a_number
+	,	company_data.company_name
+	,	result						= sop.NOV_GP
+from		_tb_b2b_sf_opportunities (nolock) so
+join		_tb_b2b_sf_opportunities_products (nolock) sop 
+	on		sop.opp_object_cd = so.object_cd
+outer apply (
+	select	person_id
+	from	_tb_b2b_sap_contract (nolock) sc
+	where	sc.sales_person_id = so.sales_person_id
+	and		sc.[start_date] <= so.closed_date
+	and		sc.[end_date] >= so.closed_date
+) contract_data
+outer apply (
+	select		top 1 
+				sc.id
+			,	sc.company_name
+			,	sc.a_number
+	from	_tb_b2b_sf_companies (nolock) sc
+	where	sc.object_cd = so.company_object_cd
+	and		sc.start_date <= so.closed_date
+	and		sc.end_date >= so.closed_date
+) company_data
+where	so.is_closed = 1
+and		so.is_deleted = 0
+and		so.opp_stage in ('Closed Won', 'Closed won (MAClight)')
+and		contract_data.person_id is null
+and		so.sales_person_id is not null
+and		sop.is_deleted = 0
+and		sop.service_type_group is not null
+
+union all
+
+select			
+		es.sales_person_id
+	,	id_source_table			= es.id
+	,	datasource_type			= 'SBP_TABLE'
+	,	es.activation_date		as closed_date
+	,	a_number
+	,	sf_company_name
+	,	result					= nov_gp
+from		_tb_b2b_eof_sbp (nolock) es
+outer apply (
+	select	person_id
+	from	_tb_b2b_sap_contract (nolock) sc
+	where	sc.sales_person_id = es.sales_person_id
+	and		sc.[start_date] <= es.activation_date
+	and		sc.[end_date] >= es.activation_date
+) contract_data
+where	contract_data.person_id is null
+and		es.sales_person_id is not null
+
+union all
+
+select			
+		rr.sales_person_id
+	,	id_source_table				= rr.id
+	,	datasource_type				= 'REV_TABLE'
+	,	rr.[start_date] as closed_date
+	,	a_number_taifun_id as a_number
+	,	sf_company_name
+	,	result						= rev_net_amt_chf
+from		_tb_b2b_rev_revenue (nolock) rr
+cross apply (
+	select	rev_2_cov_mapping = iif(rr.prod_lvl_3 in ('Hardware', 'WS Hardware'), 1, 0)
+) t10
+outer apply (
+	select	distinct person_id
+	from	_tb_b2b_sap_contract (nolock) sc
+	where	sc.sales_person_id = rr.sales_person_id
+	and		(sc.[start_date] <= rr.end_date 
+		or	sc.[end_date] >= rr.start_date)
+) contract_data
+where	isnull(rr.rev_net_amt_chf, 0) <> 0
+and		isnull(rr.account_sub_type_cat_name, '') not in ('MEDI1', 'MEDI2', 'MEDI3')
+and		contract_data.person_id is null
+and		rr.sales_person_id is not null
+
+union all
+
+/* Manual adjustment ------------------------------------------------------------- */
+select			
+	mar.sales_person_id
+,	id_source_table				= mar.id
+,	datasource_type				= 'REV_MA'
+,	mar.start_date as closed_date
+,	a_number_taifun_id as a_number
+,	sf_company_name
+,	result						= rev_net_amt_chf 
+from		_tb_b2b_manual_adjustments_rev (nolock) mar		
+
+cross apply (
+	select	distinct person_id
+	from	_tb_b2b_sap_contract (nolock) sc
+	where	sc.sales_person_id = mar.sales_person_id_prefix
+	and		(sc.[start_date] <= mar.end_date 
+		and	sc.[end_date] >= mar.start_date)
+) contract_data				
+where	isnull(mar.rev_net_amt_chf, 0) <> 0
+and		isnull(mar.account_sub_type_cat_name, '') not in ('MEDI1', 'MEDI2', 'MEDI3');
+
+
