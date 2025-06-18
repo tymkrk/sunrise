@@ -9,14 +9,14 @@
       <am:Name>SSDTRS</am:Name>
       <am:Version>17.13.35913.81</am:Version>
     </am:UpdatedBy>
-    <am:LastModifiedTimestamp>2025-06-12T07:48:54.8353698Z</am:LastModifiedTimestamp>
+    <am:LastModifiedTimestamp>2025-06-18T08:24:56.6833835Z</am:LastModifiedTimestamp>
   </am:AuthoringMetadata>
   <AutoRefresh>0</AutoRefresh>
   <DataSources>
     <DataSource Name="tenant">
       <ConnectionProperties>
         <DataProvider>OLEDB</DataProvider>
-        <ConnectString>Provider=MSOLEDBSQL;Data Source=sun-nch-cust-npr-mssql-srvr.database.windows.net;User ID=tymoteusz.kruk@beqom.com;Initial Catalog=suntest;Use Encryption for Data=true;Authentication=ActiveDirectoryInteractive</ConnectString>
+        <ConnectString>Provider=MSOLEDBSQL;Data Source=sun-nch-cust-prd-mssql-srvr.database.windows.net;User ID=tymoteusz.kruk@beqom.com;Initial Catalog=sunprod;Use Encryption for Data=true;Authentication=ActiveDirectoryInteractive</ConnectString>
         <IntegratedSecurity>true</IntegratedSecurity>
       </ConnectionProperties>
       <rd:SecurityType>Integrated</rd:SecurityType>
@@ -631,16 +631,13 @@
           <DataField>period_name</DataField>
           <rd:UserDefined>true</rd:UserDefined>
         </Field>
-        <Field Name="target_value">
-          <Value>target_value</Value>
-        </Field>
-        <Field Name="target_value_1">
-          <DataField>target_value</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
         <Field Name="actuals_value">
           <DataField>actuals_value</DataField>
           <rd:UserDefined>true</rd:UserDefined>
+        </Field>
+        <Field Name="target_value">
+          <DataField>target_value</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
         <Field Name="achievement_factorized_boostered">
           <DataField>achievement_factorized_boostered</DataField>
