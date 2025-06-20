@@ -9,14 +9,14 @@
       <am:Name>SSDTRS</am:Name>
       <am:Version>17.13.35913.81</am:Version>
     </am:UpdatedBy>
-    <am:LastModifiedTimestamp>2025-06-10T13:17:46.5931742Z</am:LastModifiedTimestamp>
+    <am:LastModifiedTimestamp>2025-06-20T10:13:43.5470613Z</am:LastModifiedTimestamp>
   </am:AuthoringMetadata>
   <AutoRefresh>0</AutoRefresh>
   <DataSources>
     <DataSource Name="tenant">
       <ConnectionProperties>
         <DataProvider>OLEDB</DataProvider>
-        <ConnectString>Provider=MSOLEDBSQL;Data Source=sun-nch-cust-npr-mssql-srvr.database.windows.net;User ID=tymoteusz.kruk@beqom.com;Initial Catalog=suntest;Use Encryption for Data=true;Authentication=ActiveDirectoryInteractive</ConnectString>
+        <ConnectString>Provider=MSOLEDBSQL;Data Source=sun-nch-cust-prd-mssql-srvr.database.windows.net;User ID=tymoteusz.kruk@beqom.com;Initial Catalog=sunprod;Use Encryption for Data=true;Authentication=ActiveDirectoryInteractive</ConnectString>
         <IntegratedSecurity>true</IntegratedSecurity>
       </ConnectionProperties>
       <rd:SecurityType>Integrated</rd:SecurityType>
@@ -265,7 +265,7 @@
         </Field>
       </Fields>
     </DataSet>
-    <DataSet Name="CalcResult">
+    <DataSet Name="Achievement">
       <Query>
         <DataSourceName>tenant</DataSourceName>
         <QueryParameters>
@@ -273,11 +273,14 @@
             <Value>=Parameters!person_id.Value</Value>
           </QueryParameter>
           <QueryParameter Name="id_payment_dates">
-            <Value>=Parameters!id_payment_dates_new.Value</Value>
+            <Value>=Parameters!id_payment_dates.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="mode">
+            <Value>7</Value>
           </QueryParameter>
         </QueryParameters>
         <CommandType>StoredProcedure</CommandType>
-        <CommandText>_sp_b2b_report_calc_result_achievement</CommandText>
+        <CommandText>_sp_b2b_report_calc_result_segment</CommandText>
       </Query>
       <Fields>
         <Field Name="plan_name">
@@ -312,17 +315,17 @@
           <DataField>achievement</DataField>
           <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
-        <Field Name="achievement_rev">
-          <DataField>achievement_rev</DataField>
+        <Field Name="achievement_ent">
+          <DataField>achievement_ent</DataField>
           <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
-        <Field Name="achievement_sf">
-          <DataField>achievement_sf</DataField>
+        <Field Name="achievement_bmm">
+          <DataField>achievement_bmm</DataField>
           <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
       </Fields>
     </DataSet>
-    <DataSet Name="CalcResultSegmentTable">
+    <DataSet Name="AchievementPerTarget">
       <Query>
         <DataSourceName>tenant</DataSourceName>
         <QueryParameters>
@@ -414,69 +417,6 @@
         </Field>
       </Fields>
     </DataSet>
-    <DataSet Name="Period_Start_and_End_Dates">
-      <Query>
-        <DataSourceName>tenant</DataSourceName>
-        <QueryParameters>
-          <QueryParameter Name="@id_payment_dates">
-            <Value>=Parameters!id_payment_dates_new.Value</Value>
-          </QueryParameter>
-        </QueryParameters>
-        <CommandType>StoredProcedure</CommandType>
-        <CommandText>_sp_b2b_report_dataset_period_start_and_end_dates</CommandText>
-      </Query>
-      <Fields>
-        <Field Name="period_start_date">
-          <DataField>period_start_date</DataField>
-          <rd:TypeName>System.DateTime</rd:TypeName>
-        </Field>
-        <Field Name="period_end_date">
-          <DataField>period_end_date</DataField>
-          <rd:TypeName>System.DateTime</rd:TypeName>
-        </Field>
-      </Fields>
-    </DataSet>
-    <DataSet Name="CalcResultGauge">
-      <Query>
-        <DataSourceName>tenant</DataSourceName>
-        <QueryParameters>
-          <QueryParameter Name="person_id">
-            <Value>=Parameters!person_id.Value</Value>
-          </QueryParameter>
-          <QueryParameter Name="id_payment_dates">
-            <Value>=Parameters!id_payment_dates_new.Value</Value>
-          </QueryParameter>
-        </QueryParameters>
-        <CommandType>StoredProcedure</CommandType>
-        <CommandText>_sp_b2b_report_calc_result_gauge</CommandText>
-      </Query>
-      <Fields>
-        <Field Name="achievement_cap">
-          <DataField>achievement_cap</DataField>
-          <rd:TypeName>System.Int32</rd:TypeName>
-        </Field>
-        <Field Name="achievement_accelerated">
-          <DataField>achievement_accelerated</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="metric_code">
-          <DataField>metric_code</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="target_name">
-          <DataField>target_name</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="rn">
-          <DataField>rn</DataField>
-          <rd:TypeName>System.Int64</rd:TypeName>
-        </Field>
-        <Field Name="target_value">
-          <DataField>target_value</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-      </Fields>
-    </DataSet>
     <DataSet Name="EmployeeFullname">
       <Query>
         <DataSourceName>tenant</DataSourceName>
@@ -549,59 +489,6 @@
         </Field>
       </Fields>
     </DataSet>
-    <DataSet Name="CalcResultChartREV">
-      <Query>
-        <DataSourceName>tenant</DataSourceName>
-        <QueryParameters>
-          <QueryParameter Name="person_id">
-            <Value>=Parameters!person_id.Value</Value>
-          </QueryParameter>
-          <QueryParameter Name="id_payment_dates">
-            <Value>=Parameters!id_payment_dates_new.Value</Value>
-          </QueryParameter>
-          <QueryParameter Name="metric_code">
-            <Value>REV</Value>
-            <rd:UserDefined>true</rd:UserDefined>
-          </QueryParameter>
-        </QueryParameters>
-        <CommandType>StoredProcedure</CommandType>
-        <CommandText>_sp_b2b_report_calc_result_chart_new</CommandText>
-      </Query>
-      <Fields>
-        <Field Name="period_name">
-          <DataField>period_name</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="actuals_value">
-          <DataField>actuals_value</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="target_value">
-          <DataField>target_value</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="achievement_factorized_boostered">
-          <DataField>achievement_factorized_boostered</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="achievement_accelerated">
-          <DataField>achievement_accelerated</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="accelerated_flag">
-          <DataField>accelerated_flag</DataField>
-          <rd:TypeName>System.Int32</rd:TypeName>
-        </Field>
-        <Field Name="max_target_actuals">
-          <DataField>max_target_actuals</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="max_achievement">
-          <DataField>max_achievement</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-      </Fields>
-    </DataSet>
     <DataSet Name="TargetsNames">
       <Query>
         <DataSourceName>tenant</DataSourceName>
@@ -625,99 +512,42 @@
         </Field>
       </Fields>
     </DataSet>
-    <DataSet Name="CalcResultChartSF">
+    <DataSet Name="AchievementPerSegment">
       <Query>
         <DataSourceName>tenant</DataSourceName>
         <QueryParameters>
           <QueryParameter Name="person_id">
             <Value>=Parameters!person_id.Value</Value>
-          </QueryParameter>
-          <QueryParameter Name="id_payment_dates">
-            <Value>=Parameters!id_payment_dates_new.Value</Value>
-          </QueryParameter>
-          <QueryParameter Name="metric_code">
-            <Value>SF</Value>
-          </QueryParameter>
-        </QueryParameters>
-        <CommandType>StoredProcedure</CommandType>
-        <CommandText>_sp_b2b_report_calc_result_chart_new</CommandText>
-      </Query>
-      <Fields>
-        <Field Name="period_name">
-          <DataField>period_name</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="target_value">
-          <DataField>target_value</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="actuals_value">
-          <DataField>actuals_value</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="achievement_factorized_boostered">
-          <DataField>achievement_factorized_boostered</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="achievement_accelerated">
-          <DataField>achievement_accelerated</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="accelerated_flag">
-          <DataField>accelerated_flag</DataField>
-          <rd:TypeName>System.Int32</rd:TypeName>
-        </Field>
-        <Field Name="max_target_actuals">
-          <DataField>max_target_actuals</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="max_achievement">
-          <DataField>max_achievement</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-      </Fields>
-    </DataSet>
-    <DataSet Name="CalcResultSegment">
-      <Query>
-        <DataSourceName>tenant</DataSourceName>
-        <QueryParameters>
-          <QueryParameter Name="person_id">
-            <Value>=Parameters!person_id.Value</Value>
+            <rd:UserDefined>true</rd:UserDefined>
           </QueryParameter>
           <QueryParameter Name="id_payment_dates">
             <Value>=Parameters!id_payment_dates.Value</Value>
+            <rd:UserDefined>true</rd:UserDefined>
           </QueryParameter>
           <QueryParameter Name="mode">
-            <Value>5</Value>
+            <Value>8</Value>
+            <rd:UserDefined>true</rd:UserDefined>
           </QueryParameter>
         </QueryParameters>
         <CommandType>StoredProcedure</CommandType>
         <CommandText>_sp_b2b_report_calc_result_segment</CommandText>
       </Query>
       <Fields>
-        <Field Name="BMM_weight">
-          <DataField>BMM_weight</DataField>
+        <Field Name="segment_code">
+          <DataField>segment_code</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="weight_segment">
+          <DataField>weight_segment</DataField>
           <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
-        <Field Name="ENT_weight">
-          <DataField>ENT_weight</DataField>
+        <Field Name="achievement_weighted">
+          <DataField>achievement_weighted</DataField>
           <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
-        <Field Name="achievement_Weight_BMM">
-          <DataField>achievement_Weight_BMM</DataField>
+        <Field Name="achievement">
+          <DataField>achievement</DataField>
           <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="achievement_Weight_ENT">
-          <DataField>achievement_Weight_ENT</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="achievement_cap">
-          <DataField>achievement_cap</DataField>
-          <rd:TypeName>System.Int32</rd:TypeName>
-        </Field>
-        <Field Name="cap_on_plan_lvl">
-          <DataField>cap_on_plan_lvl</DataField>
-          <rd:TypeName>System.Int32</rd:TypeName>
         </Field>
       </Fields>
     </DataSet>
@@ -748,13 +578,13 @@
                   <Width>2.52651cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>2.5cm</Width>
+                  <Width>5.16255cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>3.39569cm</Width>
+                  <Width>2.25783cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>2.52651cm</Width>
+                  <Width>2.60589cm</Width>
                 </TablixColumn>
                 <TablixColumn>
                   <Width>2.52651cm</Width>
@@ -1236,7 +1066,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>Achievement SF</Value>
+                                  <Value>Achievement ENT</Value>
                                   <Style>
                                     <FontSize>9pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
@@ -1279,7 +1109,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>Achievement REV</Value>
+                                  <Value>Achievement BMM</Value>
                                   <Style>
                                     <FontSize>9pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
@@ -1651,14 +1481,14 @@
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="achievement_sf">
+                        <Textbox Name="achievement_ent">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!achievement_sf.Value</Value>
+                                  <Value>=Fields!achievement_ent.Value</Value>
                                   <Style>
                                     <FontSize>9pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
@@ -1671,7 +1501,7 @@
                               </Style>
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>achievement_sf</rd:DefaultName>
+                          <rd:DefaultName>achievement_ent</rd:DefaultName>
                           <Style>
                             <Border>
                               <Color>LightGrey</Color>
@@ -1688,14 +1518,14 @@
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="achievement_rev">
+                        <Textbox Name="achievement_bmm">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!achievement_rev.Value</Value>
+                                  <Value>=Fields!achievement_bmm.Value</Value>
                                   <Style>
                                     <FontSize>9pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
@@ -1708,7 +1538,7 @@
                               </Style>
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>achievement_rev</rd:DefaultName>
+                          <rd:DefaultName>achievement_bmm</rd:DefaultName>
                           <Style>
                             <Border>
                               <Color>LightGrey</Color>
@@ -1828,11 +1658,11 @@
                 </TablixMember>
               </TablixMembers>
             </TablixRowHierarchy>
-            <DataSetName>CalcResult</DataSetName>
+            <DataSetName>Achievement</DataSetName>
             <Top>10.69135cm</Top>
             <Left>0.72162cm</Left>
             <Height>2.19688cm</Height>
-            <Width>31.76928cm</Width>
+            <Width>33.37334cm</Width>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -1893,7 +1723,7 @@
                   </TextRun>
                   <TextRun>
                     <Label>period</Label>
-                    <Value>=IIF(IsNothing(First(Fields!plan_name.Value, "CalcResult"))=True,"[ ]",First(Fields!plan_name.Value, "CalcResult"))</Value>
+                    <Value>=IIF(IsNothing(First(Fields!plan_name.Value, "Achievement"))=True,"[ ]",First(Fields!plan_name.Value, "Achievement"))</Value>
                     <Style>
                       <FontSize>15pt</FontSize>
                       <FontWeight>Bold</FontWeight>
@@ -2014,8 +1844,8 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox37</rd:DefaultName>
-            <Top>18.00052cm</Top>
-            <Left>0.72161cm</Left>
+            <Top>21.22844cm</Top>
+            <Left>0.72162cm</Left>
             <Height>3.05533cm</Height>
             <Width>15.97154cm</Width>
             <ZIndex>3</ZIndex>
@@ -2053,8 +1883,8 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox56</rd:DefaultName>
-            <Top>17.22413cm</Top>
-            <Left>0.7216cm</Left>
+            <Top>20.45205cm</Top>
+            <Left>0.72161cm</Left>
             <Height>0.6cm</Height>
             <Width>9.56967cm</Width>
             <ZIndex>4</ZIndex>
@@ -2120,7 +1950,7 @@
                   <Width>3.10854cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>2.5cm</Width>
+                  <Width>3.05563cm</Width>
                 </TablixColumn>
                 <TablixColumn>
                   <Width>3.49437cm</Width>
@@ -4195,11 +4025,11 @@
                 </TablixMember>
               </TablixMembers>
             </TablixRowHierarchy>
-            <DataSetName>CalcResultSegmentTable</DataSetName>
-            <Top>13.71841cm</Top>
-            <Left>0.72162cm</Left>
+            <DataSetName>AchievementPerTarget</DataSetName>
+            <Top>17.05216cm</Top>
+            <Left>0.78688cm</Left>
             <Height>2.82333cm</Height>
-            <Width>49.97625cm</Width>
+            <Width>50.53188cm</Width>
             <ZIndex>5</ZIndex>
             <Style>
               <Border>
@@ -4249,7 +4079,7 @@
                           <ShadowOffset>0pt</ShadowOffset>
                         </Style>
                         <GaugeInputValue>
-                          <Value>=Fields!achievement_Weight_BMM.Value / Fields!BMM_weight.Value * 100</Value>
+                          <Value>=Fields!achievement_bmm.Value * 100</Value>
                           <Multiplier>1</Multiplier>
                         </GaugeInputValue>
                         <PointerImage>
@@ -4323,7 +4153,7 @@
                     <Interval>100</Interval>
                     <IntervalOffset>NaN</IntervalOffset>
                     <MaximumValue>
-                      <Value>=Fields!achievement_cap.Value</Value>
+                      <Value>300</Value>
                       <Multiplier>1</Multiplier>
                     </MaximumValue>
                     <MinimumValue>
@@ -4466,7 +4296,7 @@
             </RadialGauges>
             <GaugeLabels>
               <GaugeLabel Name="GaugeLabel1">
-                <Text>=System.Math.round(Fields!achievement_Weight_BMM.Value / Fields!BMM_weight.Value * 100, 1) &amp; "%"</Text>
+                <Text>=System.Math.round(Fields!achievement_bmm.Value * 100, 1) &amp; "%"</Text>
                 <TextShadowOffset>0pt</TextShadowOffset>
                 <UseFontPercent>true</UseFontPercent>
                 <Style>
@@ -4519,7 +4349,7 @@
               <Source>External</Source>
               <Value />
             </TopImage>
-            <DataSetName>CalcResultSegment</DataSetName>
+            <DataSetName>Achievement</DataSetName>
             <Top>6.0735cm</Top>
             <Left>16.50348cm</Left>
             <Height>4.17028cm</Height>
@@ -4573,7 +4403,7 @@
                           <ShadowOffset>0pt</ShadowOffset>
                         </Style>
                         <GaugeInputValue>
-                          <Value>=(Fields!achievement_Weight_BMM.Value + Fields!achievement_Weight_ENT.Value) * 100</Value>
+                          <Value>=Fields!achievement.Value * 100</Value>
                           <Multiplier>1</Multiplier>
                         </GaugeInputValue>
                         <PointerImage>
@@ -4647,7 +4477,7 @@
                     <Interval>100</Interval>
                     <IntervalOffset>NaN</IntervalOffset>
                     <MaximumValue>
-                      <Value>=Fields!achievement_cap.Value</Value>
+                      <Value>300</Value>
                       <Multiplier>1</Multiplier>
                     </MaximumValue>
                     <MinimumValue>
@@ -4790,7 +4620,7 @@
             </RadialGauges>
             <GaugeLabels>
               <GaugeLabel Name="GaugeLabel1">
-                <Text>=System.Math.round((Fields!achievement_Weight_BMM.Value + Fields!achievement_Weight_ENT.Value) * 100, 1) &amp; "%"</Text>
+                <Text>=System.Math.round(Fields!achievement.Value * 100, 1) &amp; "%"</Text>
                 <TextShadowOffset>0pt</TextShadowOffset>
                 <UseFontPercent>true</UseFontPercent>
                 <Style>
@@ -4843,8 +4673,8 @@
               <Source>External</Source>
               <Value />
             </TopImage>
-            <DataSetName>CalcResultSegment</DataSetName>
-            <Top>6.0735cm</Top>
+            <DataSetName>Achievement</DataSetName>
+            <Top>6.10878cm</Top>
             <Left>0.78688cm</Left>
             <Height>4.17028cm</Height>
             <Width>5.73997cm</Width>
@@ -4897,7 +4727,7 @@
                           <ShadowOffset>0pt</ShadowOffset>
                         </Style>
                         <GaugeInputValue>
-                          <Value>=Fields!achievement_Weight_ENT.Value / Fields!ENT_weight.Value * 100</Value>
+                          <Value>=Fields!achievement_ent.Value * 100</Value>
                           <Multiplier>1</Multiplier>
                         </GaugeInputValue>
                         <PointerImage>
@@ -4971,7 +4801,7 @@
                     <Interval>100</Interval>
                     <IntervalOffset>NaN</IntervalOffset>
                     <MaximumValue>
-                      <Value>=Fields!achievement_cap.Value</Value>
+                      <Value>300</Value>
                       <Multiplier>1</Multiplier>
                     </MaximumValue>
                     <MinimumValue>
@@ -5114,7 +4944,7 @@
             </RadialGauges>
             <GaugeLabels>
               <GaugeLabel Name="GaugeLabel1">
-                <Text>=System.Math.round(Fields!achievement_Weight_ENT.Value / Fields!ENT_weight.Value * 100, 1) &amp; "%"</Text>
+                <Text>=System.Math.round(Fields!achievement_ent.Value * 100, 1) &amp; "%"</Text>
                 <TextShadowOffset>0pt</TextShadowOffset>
                 <UseFontPercent>true</UseFontPercent>
                 <Style>
@@ -5167,7 +4997,7 @@
               <Source>External</Source>
               <Value />
             </TopImage>
-            <DataSetName>CalcResultSegment</DataSetName>
+            <DataSetName>Achievement</DataSetName>
             <Top>6.0735cm</Top>
             <Left>8.65158cm</Left>
             <Height>4.17028cm</Height>
@@ -5423,8 +5253,730 @@ Enterprise</Value>
               </Border>
             </Style>
           </Tablix>
+          <Tablix Name="Tablix4">
+            <TablixBody>
+              <TablixColumns>
+                <TablixColumn>
+                  <Width>2.92996cm</Width>
+                </TablixColumn>
+                <TablixColumn>
+                  <Width>2.5cm</Width>
+                </TablixColumn>
+                <TablixColumn>
+                  <Width>2.5cm</Width>
+                </TablixColumn>
+                <TablixColumn>
+                  <Width>3.06844cm</Width>
+                </TablixColumn>
+                <TablixColumn>
+                  <Width>3.32021cm</Width>
+                </TablixColumn>
+              </TablixColumns>
+              <TablixRows>
+                <TablixRow>
+                  <Height>0.6cm</Height>
+                  <TablixCells>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox16">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>Achievement per Segment</Value>
+                                  <Style>
+                                    <FontSize>12pt</FontSize>
+                                    <FontWeight>Bold</FontWeight>
+                                    <Color>#1f497d</Color>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox12</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Style>None</Style>
+                            </Border>
+                            <BackgroundColor>White</BackgroundColor>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                        <ColSpan>4</ColSpan>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell />
+                    <TablixCell />
+                    <TablixCell />
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox173">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value />
+                                  <Style>
+                                    <FontSize>12pt</FontSize>
+                                    <FontWeight>Bold</FontWeight>
+                                    <Color>#1f497d</Color>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox173</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Style>None</Style>
+                            </Border>
+                            <BackgroundColor>White</BackgroundColor>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                  </TablixCells>
+                </TablixRow>
+                <TablixRow>
+                  <Height>1.02333cm</Height>
+                  <TablixCells>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox23">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>Segment Code</Value>
+                                  <Style>
+                                    <FontSize>9pt</FontSize>
+                                    <FontWeight>Bold</FontWeight>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Center</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox17</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                            <TopBorder>
+                              <Style>None</Style>
+                            </TopBorder>
+                            <BackgroundColor>#a5c3df</BackgroundColor>
+                            <VerticalAlign>Middle</VerticalAlign>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox27">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>Achievement Segment</Value>
+                                  <Style>
+                                    <FontSize>9pt</FontSize>
+                                    <FontWeight>Bold</FontWeight>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Center</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox24</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                            <TopBorder>
+                              <Style>None</Style>
+                            </TopBorder>
+                            <BackgroundColor>#a5c3df</BackgroundColor>
+                            <VerticalAlign>Middle</VerticalAlign>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox71">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>Segment Weight</Value>
+                                  <Style>
+                                    <FontSize>9pt</FontSize>
+                                    <FontWeight>Bold</FontWeight>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Center</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox16</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                            <TopBorder>
+                              <Style>None</Style>
+                            </TopBorder>
+                            <BackgroundColor>#a5c3df</BackgroundColor>
+                            <VerticalAlign>Middle</VerticalAlign>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox78">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>Achievement  Weighted</Value>
+                                  <Style>
+                                    <FontSize>9pt</FontSize>
+                                    <FontWeight>Bold</FontWeight>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Center</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox33</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                            <TopBorder>
+                              <Style>None</Style>
+                            </TopBorder>
+                            <BackgroundColor>#a5c3df</BackgroundColor>
+                            <VerticalAlign>Middle</VerticalAlign>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox45">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>Calculation Method</Value>
+                                  <Style>
+                                    <FontSize>9pt</FontSize>
+                                    <FontWeight>Bold</FontWeight>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Center</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox31</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                            <TopBorder>
+                              <Style>None</Style>
+                            </TopBorder>
+                            <RightBorder>
+                              <Style>None</Style>
+                            </RightBorder>
+                            <BackgroundColor>#a5c3df</BackgroundColor>
+                            <VerticalAlign>Middle</VerticalAlign>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                  </TablixCells>
+                </TablixRow>
+                <TablixRow>
+                  <Height>0.6cm</Height>
+                  <TablixCells>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Target_Code3">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!segment_code.Value</Value>
+                                  <Style>
+                                    <FontSize>9pt</FontSize>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Center</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Target_Code</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                            <VerticalAlign>Middle</VerticalAlign>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="segment_code2">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!achievement.Value</Value>
+                                  <Style>
+                                    <FontSize>9pt</FontSize>
+                                    <Format>0.0%</Format>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Center</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>segment_code</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                            <VerticalAlign>Middle</VerticalAlign>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="target_value3">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!weight_segment.Value</Value>
+                                  <Style>
+                                    <FontSize>9pt</FontSize>
+                                    <Format>0.0%</Format>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Center</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>target_value</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                            <VerticalAlign>Middle</VerticalAlign>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="achievement_not_accelerated4">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!achievement_weighted.Value</Value>
+                                  <Style>
+                                    <FontSize>9pt</FontSize>
+                                    <Format>0.0%</Format>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Center</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>achievement_not_accelerated1</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                            <VerticalAlign>Middle</VerticalAlign>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="year2">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=First(Fields!name_method.Value, "CalculationMethod")</Value>
+                                  <Style>
+                                    <FontSize>9pt</FontSize>
+                                    <FontWeight>Normal</FontWeight>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Center</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>year</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                            <VerticalAlign>Middle</VerticalAlign>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                  </TablixCells>
+                </TablixRow>
+                <TablixRow>
+                  <Height>0.6cm</Height>
+                  <TablixCells>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox86">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>Total weighted:</Value>
+                                  <Style>
+                                    <FontSize>9pt</FontSize>
+                                    <FontWeight>Bold</FontWeight>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Center</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox8</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                            <BackgroundColor>#b8d0e3</BackgroundColor>
+                            <VerticalAlign>Middle</VerticalAlign>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="achievement_weighted">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Sum(Fields!achievement_weighted.Value)</Value>
+                                  <Style>
+                                    <FontSize>9pt</FontSize>
+                                    <FontWeight>Bold</FontWeight>
+                                    <Format>0.0%</Format>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Center</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>achievement_weighted</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                            <BackgroundColor>#b8d0e3</BackgroundColor>
+                            <VerticalAlign>Middle</VerticalAlign>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="weight_segment1">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Sum(Fields!weight_segment.Value)</Value>
+                                  <Style>
+                                    <FontSize>9pt</FontSize>
+                                    <FontWeight>Bold</FontWeight>
+                                    <Format>0.0%</Format>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Center</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>weight_segment1</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                            <BackgroundColor>#b8d0e3</BackgroundColor>
+                            <VerticalAlign>Middle</VerticalAlign>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox87">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Sum(Fields!achievement_weighted.Value)</Value>
+                                  <Style>
+                                    <FontSize>9pt</FontSize>
+                                    <FontWeight>Bold</FontWeight>
+                                    <Format>0.0%</Format>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Center</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox42</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                            <BackgroundColor>#b8d0e3</BackgroundColor>
+                            <VerticalAlign>Middle</VerticalAlign>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox176">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value />
+                                  <Style>
+                                    <FontSize>9pt</FontSize>
+                                    <FontWeight>Bold</FontWeight>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Center</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox176</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                            <BackgroundColor>#b8d0e3</BackgroundColor>
+                            <VerticalAlign>Middle</VerticalAlign>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                  </TablixCells>
+                </TablixRow>
+              </TablixRows>
+            </TablixBody>
+            <TablixColumnHierarchy>
+              <TablixMembers>
+                <TablixMember />
+                <TablixMember />
+                <TablixMember />
+                <TablixMember />
+                <TablixMember />
+              </TablixMembers>
+            </TablixColumnHierarchy>
+            <TablixRowHierarchy>
+              <TablixMembers>
+                <TablixMember>
+                  <KeepWithGroup>After</KeepWithGroup>
+                </TablixMember>
+                <TablixMember>
+                  <KeepWithGroup>After</KeepWithGroup>
+                </TablixMember>
+                <TablixMember>
+                  <Group Name="Details4" />
+                </TablixMember>
+                <TablixMember>
+                  <KeepWithGroup>Before</KeepWithGroup>
+                </TablixMember>
+              </TablixMembers>
+            </TablixRowHierarchy>
+            <DataSetName>AchievementPerSegment</DataSetName>
+            <Top>13.65667cm</Top>
+            <Left>0.78688cm</Left>
+            <Height>2.82333cm</Height>
+            <Width>14.31861cm</Width>
+            <ZIndex>12</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+              <TextAlign>Center</TextAlign>
+            </Style>
+          </Tablix>
         </ReportItems>
-        <Height>21.69646cm</Height>
+        <Height>26.06209cm</Height>
         <Style>
           <Border>
             <Style>None</Style>
@@ -5432,7 +5984,7 @@ Enterprise</Value>
           <BackgroundColor>White</BackgroundColor>
         </Style>
       </Body>
-      <Width>556.9787mm</Width>
+      <Width>623.88518mm</Width>
       <Page>
         <PageHeight>21cm</PageHeight>
         <PageWidth>29.7cm</PageWidth>
@@ -5452,7 +6004,7 @@ Enterprise</Value>
       <DataType>String</DataType>
       <DefaultValue>
         <Values>
-          <Value>99011</Value>
+          <Value>56261</Value>
         </Values>
       </DefaultValue>
       <Prompt>Person ID</Prompt>
@@ -5461,7 +6013,7 @@ Enterprise</Value>
       <DataType>String</DataType>
       <DefaultValue>
         <Values>
-          <Value>4675</Value>
+          <Value>765</Value>
         </Values>
       </DefaultValue>
       <Prompt>B2B Plan | Period</Prompt>
