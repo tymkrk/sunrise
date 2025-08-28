@@ -1,4 +1,4 @@
-create  procedure [dbo].[_sp_b2b_rep_filter_manager]
+create   procedure [dbo].[_sp_b2b_rep_filter_manager]
 @id_user_profile int
 as
 begin
@@ -35,7 +35,7 @@ begin
 			from _tb_b2b_sap_employee (nolock) se
 			where se.person_id = pp.codepayee) se
 		join	k_users_profiles (nolock) up_parameter
-			on	up_parameter.iduserprofile = 236500
+			on	up_parameter.iduserprofile = @id_user_profile
 		join	k_profiles (nolock) p_parameter
 			on	p_parameter.id_profile = up_parameter.id_profile
 		where	p_parameter.name_profile = 'B2B Admin'
