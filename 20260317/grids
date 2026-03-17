@@ -1,0 +1,85 @@
+LTIS Process	LTIS Participant
+LTIS Allocation	LTIS Participant
+FX Rates Child	HR Administrator
+FX Rates - Histo	HR Administrator
+Email Notifications Content	HR Administrator
+Email Notifications History	HR Administrator
+Email Notifications Trigger	HR Administrator
+GN_Kernel_Mobile_DashboardPeriods	HR Administrator
+Access Grant Management	HR Administrator
+Action Grid	HR Administrator
+Letter Download	HR Administrator
+Letter Generation Trigger	HR Administrator
+Zipped Letters Download	HR Administrator
+Audit - Workday Inbound Trigger	HR Administrator
+Process Freeze Date	HR Administrator
+Workday Inbound Information	HR Administrator
+Workday Inbound Trigger	HR Administrator
+Workday Inbound Information Details	HR Administrator
+LTIS Process Extra Assignment	HR Administrator
+Compensation Grade Profile	HR Administrator
+GN_PopulationPreview	HR Administrator
+GN_AdminHierarchySecurity	HR Administrator
+GN_KernelHMTree	HR Administrator
+FX Rates	HR Administrator
+Business Area	HR Administrator
+Business Unit	HR Administrator
+Cost Center	HR Administrator
+Currency	HR Administrator
+Department	HR Administrator
+Employee Class	HR Administrator
+Gender	HR Administrator
+Job Code	HR Administrator
+Job Title	HR Administrator
+Legal Entity	HR Administrator
+Payroll Type	HR Administrator
+Country	HR Administrator
+Canton	HR Administrator
+Organization Data	HR Administrator
+Organization Data Action	HR Administrator
+Organization Data Import	HR Administrator
+Organization Data Error	HR Administrator
+Organization Data Final	HR Administrator
+FTE Data	HR Administrator
+FTE Data Action	HR Administrator
+FTE Data Import	HR Administrator
+FTE Data Error	HR Administrator
+FTE Data Final	HR Administrator
+Job Data	HR Administrator
+Job Data Action	HR Administrator
+Job Data Import	HR Administrator
+Job Data Error	HR Administrator
+Job Data Final	HR Administrator
+Compensation Data	HR Administrator
+Compensation Data Action	HR Administrator
+Compensation Data Import	HR Administrator
+Compensation Data Error	HR Administrator
+Compensation Data Final	HR Administrator
+Employee Data	HR Administrator
+Employee Data Action	HR Administrator
+Employee Data Import	HR Administrator
+Employee Data Error	HR Administrator
+Employee Data Final	HR Administrator
+Title Data	HR Administrator
+Title Data Action	HR Administrator
+Title Data Import	HR Administrator
+Title Data Error	HR Administrator
+Title Data Final	HR Administrator
+Hierarchy Data	HR Administrator
+Hierarchy Data Action	HR Administrator
+Hierarchy Data Import	HR Administrator
+Hierarchy Data Error	HR Administrator
+Hierarchy Data Final	HR Administrator
+Master Employee Data	HR Administrator
+Master Organization Data Child	HR Administrator
+Master FTE Data Child	HR Administrator
+Master Job Data Child	HR Administrator
+Master Compensation Data Child	HR Administrator
+Master Title Data Child	HR Administrator
+HF & PE Points	HR Administrator
+Master Employee Data Child	HR Administrator
+Identified Staff	HR Administrator
+Quota Employee List	HR Administrator
+LTIS Process Management	HR Administrator
+LTIS Process	HR Administrator
+LTIS Allocation	HR Administrator
