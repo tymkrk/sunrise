@@ -1,30 +1,25 @@
-Compensation Review Process 2025	Compensation Review Manager	WFL_Compensation Review Process 2025	Step 1: Compensation Manager N+1 Approval	1	1	1	1
-Compensation Review Process 2025	Compensation Review Manager	WFL_Compensation Review Process 2025	Step 2: Compensation Manager N+2 Approval	1	1	1	1
-Compensation Review Process 2025	Compensation Review Manager	WFL_Compensation Review Process 2025	Step 3: Compensation Manager N+3 Approval	1	1	1	1
-Compensation Review Process 2025	Compensation Review Manager	WFL_Compensation Review Process 2025	Step 4: HR Approval	0	0	0	0
-Compensation Review Process 2025	Compensation Review Manager	WFL_Compensation Review Process 2025	Step 5: CEO/CFO Approval	0	0	0	0
-Compensation Review Process 2025	HR Administrator	WFL_Compensation Review Process 2025	Step 1: Compensation Manager N+1 Approval	1	1	1	1
-Compensation Review Process 2025	HR Administrator	WFL_Compensation Review Process 2025	Step 2: Compensation Manager N+2 Approval	1	1	1	1
-Compensation Review Process 2025	HR Administrator	WFL_Compensation Review Process 2025	Step 3: Compensation Manager N+3 Approval	1	1	1	1
-Compensation Review Process 2025	HR Administrator	WFL_Compensation Review Process 2025	Step 4: HR Approval	1	1	1	1
-Compensation Review Process 2025	HR Administrator	WFL_Compensation Review Process 2025	Step 5: CEO/CFO Approval	1	1	1	1
-Compensation Review Process 2025	Admin Restricted	WFL_Compensation Review Process 2025	Step 1: Compensation Manager N+1 Approval	0	0	0	0
-Compensation Review Process 2025	Admin Restricted	WFL_Compensation Review Process 2025	Step 2: Compensation Manager N+2 Approval	0	0	0	0
-Compensation Review Process 2025	Admin Restricted	WFL_Compensation Review Process 2025	Step 3: Compensation Manager N+3 Approval	0	0	0	0
-Compensation Review Process 2025	Admin Restricted	WFL_Compensation Review Process 2025	Step 4: HR Approval	0	0	0	0
-Compensation Review Process 2025	Admin Restricted	WFL_Compensation Review Process 2025	Step 5: CEO/CFO Approval	1	1	1	1
-Compensation Review Process 2025	GV_Administrator	WFL_Compensation Review Process 2025	Step 1: Compensation Manager N+1 Approval	1	1	1	1
-Compensation Review Process 2025	GV_Administrator	WFL_Compensation Review Process 2025	Step 2: Compensation Manager N+2 Approval	1	1	1	1
-Compensation Review Process 2025	GV_Administrator	WFL_Compensation Review Process 2025	Step 3: Compensation Manager N+3 Approval	1	1	1	1
-Compensation Review Process 2025	GV_Administrator	WFL_Compensation Review Process 2025	Step 4: HR Approval	1	1	1	1
-Compensation Review Process 2025	GV_Administrator	WFL_Compensation Review Process 2025	Step 5: CEO/CFO Approval	1	1	1	1
-Compensation Review Process 2025	View Profile	WFL_Compensation Review Process 2025	Step 1: Compensation Manager N+1 Approval	0	0	0	0
-Compensation Review Process 2025	View Profile	WFL_Compensation Review Process 2025	Step 2: Compensation Manager N+2 Approval	0	0	0	0
-Compensation Review Process 2025	View Profile	WFL_Compensation Review Process 2025	Step 3: Compensation Manager N+3 Approval	0	0	0	0
-Compensation Review Process 2025	View Profile	WFL_Compensation Review Process 2025	Step 4: HR Approval	0	0	0	0
-Compensation Review Process 2025	View Profile	WFL_Compensation Review Process 2025	Step 5: CEO/CFO Approval	0	0	0	0
-Compensation Review Process 2025	HR Administrator (Limited)	WFL_Compensation Review Process 2025	Step 1: Compensation Manager N+1 Approval	1	1	1	1
-Compensation Review Process 2025	HR Administrator (Limited)	WFL_Compensation Review Process 2025	Step 2: Compensation Manager N+2 Approval	1	1	1	1
-Compensation Review Process 2025	HR Administrator (Limited)	WFL_Compensation Review Process 2025	Step 3: Compensation Manager N+3 Approval	1	1	1	1
-Compensation Review Process 2025	HR Administrator (Limited)	WFL_Compensation Review Process 2025	Step 4: HR Approval	1	1	1	1
-Compensation Review Process 2025	HR Administrator (Limited)	WFL_Compensation Review Process 2025	Step 5: CEO/CFO Approval	1	1	1	1
+Compensation Review Process 2025	Compensation Review Manager	Step 1: Compensation Manager N+1 Approval	1	1	1	1
+Compensation Review Process 2025	Compensation Review Manager	Step 2: Compensation Manager N+2 Approval	1	1	1	1
+Compensation Review Process 2025	Compensation Review Manager	Step 3: Compensation Manager N+3 Approval	1	1	1	1
+Compensation Review Process 2025	Compensation Review Manager	Step 4: HR Approval	0	0	0	0
+Compensation Review Process 2025	Compensation Review Manager	Step 5: CEO/CFO Approval	0	0	0	0
+Compensation Review Process 2025	HR Administrator	Step 1: Compensation Manager N+1 Approval	1	1	1	1
+Compensation Review Process 2025	HR Administrator	Step 2: Compensation Manager N+2 Approval	1	1	1	1
+Compensation Review Process 2025	HR Administrator	Step 3: Compensation Manager N+3 Approval	1	1	1	1
+Compensation Review Process 2025	HR Administrator	Step 4: HR Approval	1	1	1	1
+Compensation Review Process 2025	HR Administrator	Step 5: CEO/CFO Approval	1	1	1	1
+Compensation Review Process 2025	Admin Restricted	Step 1: Compensation Manager N+1 Approval	0	0	0	0
+Compensation Review Process 2025	Admin Restricted	Step 2: Compensation Manager N+2 Approval	0	0	0	0
+Compensation Review Process 2025	Admin Restricted	Step 3: Compensation Manager N+3 Approval	0	0	0	0
+Compensation Review Process 2025	Admin Restricted	Step 4: HR Approval	0	0	0	0
+Compensation Review Process 2025	Admin Restricted	Step 5: CEO/CFO Approval	1	1	1	1
+Compensation Review Process 2025	View Profile	Step 1: Compensation Manager N+1 Approval	0	0	0	0
+Compensation Review Process 2025	View Profile	Step 2: Compensation Manager N+2 Approval	0	0	0	0
+Compensation Review Process 2025	View Profile	Step 3: Compensation Manager N+3 Approval	0	0	0	0
+Compensation Review Process 2025	View Profile	Step 4: HR Approval	0	0	0	0
+Compensation Review Process 2025	View Profile	Step 5: CEO/CFO Approval	0	0	0	0
+Compensation Review Process 2025	HR Administrator (Limited)	Step 1: Compensation Manager N+1 Approval	1	1	1	1
+Compensation Review Process 2025	HR Administrator (Limited)	Step 2: Compensation Manager N+2 Approval	1	1	1	1
+Compensation Review Process 2025	HR Administrator (Limited)	Step 3: Compensation Manager N+3 Approval	1	1	1	1
+Compensation Review Process 2025	HR Administrator (Limited)	Step 4: HR Approval	1	1	1	1
+Compensation Review Process 2025	HR Administrator (Limited)	Step 5: CEO/CFO Approval	1	1	1	1
